@@ -1,9 +1,11 @@
 package com.example.productapi.controller;
 
-import com.example.productapi.model.Product;
+import com.example.productapi.dto.ProductCreateDTO;
+import com.example.productapi.dto.ProductResponseDTO;
+import com.example.productapi.dto.ProductUpdateDTO;
 import com.example.productapi.service.ProductService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,39 +19,38 @@ public class ProductController {
     public ProductController(ProductService productService) {
         this.productService = productService;
     }
+
     // GET ALL
     @GetMapping
-    public List<Product> getAll() {
+    public List<ProductResponseDTO> getAll() {
         return productService.getAllProducts();
     }
 
     // GET BY ID
     @GetMapping("/{id}")
-    public Product getById(@PathVariable Long id) {
+    public ProductResponseDTO getById(@PathVariable Long id) {
         return productService.getProductById(id);
     }
 
     // CREATE
     @PostMapping
-    public Product create(@RequestBody Product product) {
-        return productService.createProduct(product);
+    public ResponseEntity<ProductResponseDTO> create(@RequestBody ProductCreateDTO createDTO) {
+        ProductResponseDTO created = productService.createProduct(createDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     // UPDATE
     @PutMapping("/{id}")
-    public Product update(
+    public ProductResponseDTO update(
             @PathVariable Long id,
-            @RequestBody Product product
-    ) {
-        return productService.updateProduct(id, product);
+            @RequestBody ProductUpdateDTO updateDTO) {
+        return productService.updateProduct(id, updateDTO);
     }
 
     // DELETE
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         productService.deleteProduct(id);
+        return ResponseEntity.noContent().build();
     }
-
-
-
 }
