@@ -3,25 +3,20 @@ CREATE DATABASE sbtest_db;
 USE sbtest_db;
 
 CREATE TABLE products (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    price INT NOT NULL,
-    created_at DATETIME NOT NULL
+    id                VARCHAR(30) PRIMARY KEY,
+    name              VARCHAR(150) NOT NULL,
+    price             INT NOT NULL,
+    cost_price        INT NOT NULL,
+    image_url         VARCHAR(500) NULL,
+    barcode           VARCHAR(50) NULL,
+    category          VARCHAR(100) NULL,
+    supply_order_id   VARCHAR(30) NULL,
+    created_at        DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-INSERT INTO products (name, price, created_at) VALUES
-('Hamburguesa', 500, NOW()),
-('Papas', 250, NOW()),
-('Gaseosa', 100, NOW()),
-('Pizza', 1200, NOW()),
-('Empanada', 180, NOW()),
-('Milanesa', 900, NOW()),
-('Sandwich de Pollo', 750, NOW()),
-('Hot Dog', 600, NOW()),
-('Ensalada', 650, NOW()),
-('Taco', 500, NOW()),
-('Nachos', 700, NOW()),
-('Cerveza', 450, NOW()),
-('Agua Mineral', 200, NOW()),
-('Helado', 350, NOW()),
-('Flan', 300, NOW());
+-- 3. Insert sample data
+INSERT INTO products (id, name, price, cost_price, image_url, barcode, category, supply_order_id, created_at) 
+VALUES 
+('p210220260352286090', 'Glade 360 cm3', 3331, 2562, '/images/untitled-70106.png', '7790520998200', 'perecedero', 'so160220261709321699', '2026-02-21 06:52:28'),
+('p160220260439270002', 'Producto Rotacion Alta', 2500, 2500, NULL, NULL, 'bebida', NULL, '2026-02-16 07:39:27'),
+('p160220260439270003', 'Pancho Caso Test', 2500, 2500, NULL, NULL, 'perecedero', NULL, '2026-02-16 07:39:27');
